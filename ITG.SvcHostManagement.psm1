@@ -1,13 +1,13 @@
 ﻿function Get-ServicesWithOwnProcess { 
-	<#
-		.Synopsis
+    <#
+        .Synopsis
             Возвращает массив идентификаторов служб, выделенных нами в отдельный процесс.
-		.Description
+        .Description
             Возвращает массив идентификаторов служб, выделенных нами в отдельный процесс.
-		.Example
-			Get-ServicesWithOwnProcess `
+        .Example
+            Get-ServicesWithOwnProcess `
             | Set-ServiceCommonProcess
-	#>
+    #>
   
     get-itemProperty `
          -path HKLM:'\Software\Microsoft\Windows NT\CurrentVersion\Svchost' `
@@ -19,15 +19,15 @@
 };
 
 function Get-ServicesWithCommonProcess { 
-	<#
-		.Synopsis
+    <#
+        .Synopsis
             Возвращает массив идентификаторов служб, использующих процесс svchost.exe (группа netsvcs).
-		.Description
+        .Description
             Возвращает массив идентификаторов служб, использующих процесс svchost.exe (группа netsvcs).
-		.Example
-			Get-ServicesWithCommonProcess `
+        .Example
+            Get-ServicesWithCommonProcess `
             | Set-ServiceOwnProcess
-	#>
+    #>
   
     (Get-ItemProperty `
         -path HKLM:'\Software\Microsoft\Windows NT\CurrentVersion\Svchost' `
@@ -39,29 +39,29 @@ function Get-ServicesWithCommonProcess {
 
 
 function Set-ServiceOwnProcess { 
-	<#
-		.Synopsis
+    <#
+        .Synopsis
             Выделение для указанного сервиса собственного процесса svchost.exe.
-		.Description
+        .Description
             Выделение для указанного сервиса собственного процесса svchost.exe.
-		.Parameter service
-		    Идентификатор службы
-		.Example
-			Set-ServiceOwnProcess `
+        .Parameter service
+            Идентификатор службы
+        .Example
+            Set-ServiceOwnProcess `
                 -service 'AppMgmt' 
-	#>
+    #>
   
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = 'Low'
     )]
     param (
-    	[Parameter(
+        [Parameter(
             Mandatory=$true,
             Position=0,
             ValueFromPipeline=$true,
             HelpMessage="Идентификатор службы."
-		)]
+        )]
         [string]$service
     )
 
@@ -102,29 +102,29 @@ function Set-ServiceOwnProcess {
 };
 
 function Set-ServiceCommonProcess { 
-	<#
-		.Synopsis
+    <#
+        .Synopsis
             Возвращаем сервис в "групповой" процесс svchost.exe (группа netsvc).
-		.Description
+        .Description
             Возвращаем сервис в "групповой" процесс svchost.exe (группа netsvc).
-		.Parameter service
-		    Идентификатор службы
-		.Example
-			Set-ServiceCommonProcess `
+        .Parameter service
+            Идентификатор службы
+        .Example
+            Set-ServiceCommonProcess `
                 -service 'AppMgmt' 
-	#>
+    #>
   
     [CmdletBinding(
         SupportsShouldProcess = $true,
         ConfirmImpact = 'Low'
     )]
     param (
-    	[Parameter(
+        [Parameter(
             Mandatory=$true,
             Position=0,
             ValueFromPipeline=$true,
             HelpMessage="Идентификатор службы."
-		)]
+        )]
         [string]$service
     )
 
